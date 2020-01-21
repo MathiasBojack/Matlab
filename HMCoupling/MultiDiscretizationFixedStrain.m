@@ -31,20 +31,22 @@ Sz_initial = 0;
 % Sv_initial = 0;
 P_initilal  = 0;
 
-dSz = ones(N,1)*(S0-Sz_initial)/N;
-dSv = zeros(N,1);
-dP  = zeros(N,1);
+dSz = ones(N,1)*(S0-Sz_initial)/N;  % dSz(k-1) = Sz(k) - Sz(k-1)
+dSv = zeros(N,1);                   % dSv(k-1) = Sv(k) - Sv(k-1)
+dEv = zeros(N,1);                   % dEv(k-1) = Ev(k) - Ev(k-1)
+dP  = zeros(N,1);                   % dP(k-1) = P(k) - P(k-1)
 
-dSv_k_1 = zeros(N_Iteration,1);
-dP_k_1  = zeros(N_Iteration,1);
+dSvk_1_i = zeros(N_Iteration,1);
+dEvk_1_i = zeros(N_Iteration,1);
+dPk_1_i  = zeros(N_Iteration,1);
 
 P = zeros(N+1,1);
 P(1) = P_initilal;
 
 
-for k = 2 : N+1
+for k = 2 : N+1   % Knowing p(k-1),dP(k-1) find p(k)
     
-    dP_k_1(1) = dP(k-1);   
+    dPk_1_i(1) = dP(k-1);   
 %     
 %     if N_Iteration == 1
 %         dSv_k(1) = K/Kv*dSz(k) - 4*G/3/Kv*b*dP_k(1);
@@ -52,15 +54,15 @@ for k = 2 : N+1
      
     for i = 1:N_Iteration-1
         % Fixed stress method
-        dSv_k_1(i)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dP_k_1(i);
-        dEv_k_1(i)  = 1/K *(dSv_k_1(i) + b * dP_k_1(i));
-        dP_k_1(i+1) = - M*b * dEv_k_1(i);       
+        dSvk_1_i(i)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dPk_1_i(i);
+        dEvk_1_i(i)  = 1/K *(dSvk_1_i(i) + b * dPk_1_i(i));
+        dPk_1_i(i+1) = - M*b * dEvk_1_i(i);       
     end
-    dSv_k_1(N_Iteration)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dP_k_1(N_Iteration);
-    dEv_k_1(N_Iteration)  = 1/K *(dSv_k_1(N_Iteration) + b * dP_k_1(N_Iteration));
+    dSvk_1_i(N_Iteration)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dPk_1_i(N_Iteration);
+    dEvk_1_i(N_Iteration)  = 1/K *(dSvk_1_i(N_Iteration) + b * dPk_1_i(N_Iteration));
     % Pass the final result of in-step iteration to the next time step  
-    dSv(k)  = dSv_k_1(end);
-    dEv(k)  = dEv_k_1(end);
+    dSv(k)  = dSvk_1_i(end);
+    dEv(k)  = dEvk_1_i(end);
     dP(k) = - M*b *dEv(k);
     P(k) = P(k-1) + dP(k);
 end

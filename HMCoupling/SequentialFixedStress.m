@@ -1,4 +1,4 @@
-clear
+% clear
 PoroProperty = PoroElasPara();
 
 K   = PoroProperty.K;
@@ -38,6 +38,11 @@ Delta_e     = (Delta_P(3:N) - Delta_P(2:N-1))/Delta_P(N);
 Beta_Cal    = Delta_e(2:end)./Delta_e(1:end-1); 
 beta        = M*b^2/Ku * 4*G/3/Kv;
 Delta_e_Cal = Delta_e(1)*beta.^[1:length(Delta_e)]'; 
+
+
+
+
+
 
 f2 = figure(2)
 clf

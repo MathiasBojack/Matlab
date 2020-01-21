@@ -1,9 +1,10 @@
 clear
 clc
-P_exact = 550256.786499812;
-List_test = 0:0.05:3;
+P_exact = 0.550256786500367e6;
+
+List_test = 0:0.5:3;
 N_test = round(10.^List_test);  % Time discretisation number
-Iteration = 1:2:5;
+Iteration = 1:1:5;
 P =zeros(length(N_test), length(Iteration));
 for i = 1: length(N_test)
     
@@ -35,7 +36,7 @@ for j =1:length(Iteration)
 end
 % xlim([1,1e3])
 title('Fixed Strain Split','interpreter','latex')
-xlabel('Time Discretization Number','interpreter','latex')
+xlabel('Time discretization Number','interpreter','latex')
 ylabel('$\varepsilon = = {\| p-p^{exact}\|}/{\| p^{exact}\|}$',...
     'interpreter','latex')
 legend(leg1,'interpreter','latex')
@@ -49,14 +50,45 @@ hold on;
 f2.Children.YScale ='log';
 
 for i =1:length(N_test)
-    plot(Iteration, Error(i,:));
-    leg_test{i} = strcat(strcat( '$10^{',num2str(log10(N_test(i)),1),'}$')); 
+    plt = plot(Iteration, Error(i,:));
+    leg_test{i} = strcat(strcat( '$10^{',num2str(log10(N_test(i)),1),'}$'));
+%     plt.Marker = marker{i+3};
+%     plt.Color = color{i+3};
 end
 
 legend(leg_test,'interpreter','latex')
 
-title('Error analysis for Iteraion Number','interpreter','latex')
-xlabel('Time Discretization Number','interpreter','latex')
+title('Fixed strain split','interpreter','latex')
+xlabel('Inter-loop iteration Number','interpreter','latex')
 ylabel('$\varepsilon = = {\| p-p^{exact}\|}/{\| p^{exact}\|}$',...
     'interpreter','latex')
 box on; grid on;
+
+
+
+%%
+% f3 = figure(2003);
+% clf
+% hold on;
+% f3.Children.YScale ='log';
+% f3.Children.XScale ='log';
+% marker = {'+','o','*','.','x','s','d','^','v','>','<','p','h'};
+% color = {'r','g','b','c','m','k','w'};
+% for j =1:length(Iteration)
+%     plt = plot(N_test*j, Error(:,j));
+%     txtStart = strcat(strcat( '$10^{',num2str(log10(Error(1,j)),1),'}$'));
+%     txtEnd   = strcat(strcat( '$10^{',num2str(log10(Error(end,j)),1),'}$'));
+%     text(N_test(1),Error(1,j)*1.1,txtStart,'interpreter','latex')
+%     text(N_test(end),Error(end,j)*1.5,txtEnd,'interpreter','latex')
+%     leg1{j} = strcat('Iteration Number =', num2str(Iteration(j)));
+%     plt.Marker = marker{j};
+%     plt.Color = color{j};
+% end
+% % xlim([1,1e3])
+% title('Fixed Strain Split','interpreter','latex')
+% xlabel('Time Discretization Number','interpreter','latex')
+% ylabel('$\varepsilon = = {\| p-p^{exact}\|}/{\| p^{exact}\|}$',...
+%     'interpreter','latex')
+% legend(leg1,'interpreter','latex')
+% box on; grid on;
+

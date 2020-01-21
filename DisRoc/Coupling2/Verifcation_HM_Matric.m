@@ -1,3 +1,9 @@
+%-------------------------------------------------------------------------%
+%                                                                         %
+%                   Verification for fixed stress split                   %
+%                                                                         %
+%-------------------------------------------------------------------------%
+
 clc
 clear
 f = fopen('projectPath.txt');
@@ -38,7 +44,7 @@ B = -b/K/CM_ud; % Skempton
 dP_Cal  = B*dSv;
 
 Sv_Cal = K/Kv*SY - 4*G/3/Kv*b*P_Gauss; 
-
+Ev_Cal = (Sv_Cal)
 
 
 

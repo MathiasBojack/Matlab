@@ -62,11 +62,12 @@ Kv  = K + 4/3*G;
 %   Cf = 1/Kf:      Compressibility of the fluid            [Pa^-1]
 %   c:              Hydraulic Diffussivity in 1D case       [m2.s^-1]
 %   gamma:          Loading coefficient                     [1]
-%
+%   
+%           dp/dt - c*d2p/dz2 = -gamma * dSzz/dt 
 %%-------------------------------------------------------------------------
 Cf  = 1/Kf;
 
-c   = k/mu * M*K/Ku * (1- 4/3*G /Kv * M*b^2/Ku)^-1;
+c   = k/mu * M*K/Ku   * (1- 4/3*G /Kv * M*b^2/Ku)^-1;
 gamma = K/Kv * M*b/Ku * (1- 4/3*G /Kv * M*b^2/Ku)^-1;
 
 PoroProperty.c      = c;
