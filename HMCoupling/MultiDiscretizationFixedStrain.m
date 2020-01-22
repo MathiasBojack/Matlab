@@ -47,10 +47,7 @@ P(1) = P_initilal;
 for k = 2 : N+1   % Knowing p(k-1),dP(k-1) find p(k)
     
     dPk_1_i(1) = dP(k-1);   
-%     
-%     if N_Iteration == 1
-%         dSv_k(1) = K/Kv*dSz(k) - 4*G/3/Kv*b*dP_k(1);
-%     end
+
      
     for i = 1:N_Iteration-1
         % Fixed stress method
@@ -60,11 +57,12 @@ for k = 2 : N+1   % Knowing p(k-1),dP(k-1) find p(k)
     end
     dSvk_1_i(N_Iteration)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dPk_1_i(N_Iteration);
     dEvk_1_i(N_Iteration)  = 1/K *(dSvk_1_i(N_Iteration) + b * dPk_1_i(N_Iteration));
+    dPk_1_i(N_Iteration) = - M*b * dEvk_1_i(N_Iteration); 
     % Pass the final result of in-step iteration to the next time step  
     dSv(k)  = dSvk_1_i(end);
     dEv(k)  = dEvk_1_i(end);
-    dP(k) = - M*b *dEv(k);
-    P(k) = P(k-1) + dP(k);
+    dP(k-1) = dPk_1_i(end);
+    P(k) = P(k-1) + dP(k-1);
 end
 
 Pressure = P(end);

@@ -1,3 +1,5 @@
+clc
+clear
 PoroProperty = PoroElasPara();
 
 K   = PoroProperty.K;

@@ -55,7 +55,7 @@ for k = 2 : N+1
     dSvk_1_i(N_Iteration)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dPk_1_i(N_Iteration);
     % Pass the final result of in-step iteration to the next time step  
     dSv(k-1) = dSvk_1_i(end); 
-    dP(k) = - M*b/Ku * dSv(k-1);
+    dP(k-1) = - M*b/Ku * dSv(k-1);
     P(k) = P(k-1) + dP(k-1);
     Sv(k) = Sv(k-1) + dSv(k-1);
 end

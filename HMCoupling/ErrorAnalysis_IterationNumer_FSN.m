@@ -1,9 +1,11 @@
 clear
 clc
-P_exact = 0.550256786500367e6;
+PoroProperty = PoroElasPara();
+P_exact = PoroProperty.gamma*1e6;
 
-List_test = 0:0.5:3;
-N_test = round(10.^List_test);  % Time discretisation number
+List_test = 0:1:3;
+% N_test = round(10.^List_test);  % Time discretisation number
+N_test = [1 10 100];
 Iteration = 1:1:5;
 P =zeros(length(N_test), length(Iteration));
 for i = 1: length(N_test)
@@ -28,8 +30,8 @@ for j =1:length(Iteration)
     plt = plot(N_test, Error(:,j));
     txtStart = strcat(strcat( '$10^{',num2str(log10(Error(1,j)),1),'}$'));
     txtEnd   = strcat(strcat( '$10^{',num2str(log10(Error(end,j)),1),'}$'));
-    text(N_test(1),Error(1,j)*1.1,txtStart,'interpreter','latex')
-    text(N_test(end),Error(end,j)*1.5,txtEnd,'interpreter','latex')
+    text(N_test(1),Error(1,j),txtStart,'interpreter','latex')
+    text(N_test(end),Error(end,j),txtEnd,'interpreter','latex')
     leg1{j} = strcat('Iteration Number =', num2str(Iteration(j)));
     plt.Marker = marker{j};
     plt.Color = color{j};
@@ -52,8 +54,8 @@ f2.Children.YScale ='log';
 for i =1:length(N_test)
     plt = plot(Iteration, Error(i,:));
     leg_test{i} = strcat(strcat( '$10^{',num2str(log10(N_test(i)),1),'}$'));
-%     plt.Marker = marker{i+3};
-%     plt.Color = color{i+3};
+    plt.Marker = marker{i};
+    plt.Color = color{i};
 end
 
 legend(leg_test,'interpreter','latex')

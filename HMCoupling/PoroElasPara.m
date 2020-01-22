@@ -49,13 +49,13 @@ mu  = 5e-4; % water
 %   Kv = K + 4/3*G Vertical incompressibility              [Pa]
 %%-------------------------------------------------------------------------
 
-K   =   E/3/(1-2*nu);
-b   =   1- K/Ks;
-CM  =   phi/Kf +(b-phi)/Ks; 
-M   =   1/CM;
-Ku  =   M*b^2+K;
-G  =  E/2/(1+nu); 
-Kv  = K + 4/3*G;
+K   =    (E/3/(1-2*nu));
+b   =    (1- K/Ks);
+CM  =    (phi/Kf +(b-phi)/Ks); 
+M   =    (1/CM);
+Ku  =    (M*b^2+K);
+G   =    (E/2/(1+nu)); 
+Kv  =    (K + 4/3*G);
 
 %--------------------------------------------------------------------------
 %                        OUTPUT: Hydraulic parameters
@@ -67,8 +67,8 @@ Kv  = K + 4/3*G;
 %%-------------------------------------------------------------------------
 Cf  = 1/Kf;
 
-c   = k/mu * M*K/Ku   * (1- 4/3*G /Kv * M*b^2/Ku)^-1;
-gamma = K/Kv * M*b/Ku * (1- 4/3*G /Kv * M*b^2/Ku)^-1;
+c   =  (k/mu * M*K/Ku   * (1- 4/3*G /Kv * M*b^2/Ku)^-1);
+gamma =  (K/Kv * M*b/Ku * (1- 4/3*G /Kv * M*b^2/Ku)^-1);
 
 PoroProperty.c      = c;
 PoroProperty.gamma  = gamma;
