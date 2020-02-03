@@ -34,7 +34,7 @@ P_initilal  = 0;
 dSz = ones(N,1)*(S0-Sz_initial)/N;   % dSz(k-1) = Sz(k) - Sz(k-1)
 dSv = zeros(N,1);                    % dSv(k-1) = Sv(k) - Sv(k-1)
 dP  = zeros(N,1);                    % dP(k-1) = P(k) - P(k-1)
-
+ScrH = zeros(N,1);
 dSvk_1_i = zeros(N_Iteration,1);
 dPk_1_i  = zeros(N_Iteration,1);
 
@@ -55,9 +55,12 @@ for k = 2 : N+1
     dSvk_1_i(N_Iteration)  = K/Kv*dSz(k-1) - 4*G/3/Kv*b*dPk_1_i(N_Iteration);
     % Pass the final result of in-step iteration to the next time step  
     dSv(k-1) = dSvk_1_i(end); 
-    dP(k-1) = - M*b/Ku * dSv(k-1);
+%     dP(k-1) = - M*b/Ku * dSv(k-1);
+% for comparison with DisRoc
+    dP(k) = - M*b/Ku * dSv(k-1);
     P(k) = P(k-1) + dP(k-1);
     Sv(k) = Sv(k-1) + dSv(k-1);
+    ScrH(k-1) = -dSv(k-1)*b/K*N; % dt = 1/N
 end
 
 Pressure = P(end);

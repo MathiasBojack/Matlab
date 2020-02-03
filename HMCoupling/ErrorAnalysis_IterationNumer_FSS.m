@@ -6,9 +6,12 @@ P_exact = PoroProperty.gamma*1e6;
 % List_test = log10(2):1:4;
 % N_test = round(10.^List_test);% Times discretization
 % N_test = [2 10 100 1000];   
-N_test = [1 10 100];
+% N_test = [1 10 100];
+% Iteration = 1:2:5;
 
-Iteration = 1:2:5;
+N_test = 10;
+Iteration = 1;
+
 P =zeros(length(N_test), length(Iteration));
 for i = 1: length(N_test)
     
@@ -46,7 +49,7 @@ ylabel('$\varepsilon = = {\| p-p^{exact}\|}/{\| p^{exact}\|}$',...
     'interpreter','latex')
 legend(leg1,'interpreter','latex')
 box on; grid on;
-saveas(f1,'ErrorAnalysis_TimeDiscretization_FSS.pdf')
+% saveas(f1,'ErrorAnalysis_TimeDiscretization_FSS.pdf')
 
 %%
 f2 = figure(1002);
@@ -69,4 +72,4 @@ xlabel('Iteration Number','interpreter','latex')
 ylabel('$\varepsilon = = {\| p-p^{exact}\|}/{\| p^{exact}\|}$',...
     'interpreter','latex')
 box on; grid on;
-saveas(f2,'ErrorAnalysis_IterationNumber_FSS.pdf')
+% saveas(f2,'ErrorAnalysis_IterationNumber_FSS.pdf')
