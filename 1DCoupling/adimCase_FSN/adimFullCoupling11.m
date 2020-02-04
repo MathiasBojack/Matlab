@@ -2,10 +2,10 @@ function [P,U] = adimFullCoupling11(input11)
 % This function solves the coupled 1D HM problem using the full coupling 
 % method
 
-%   /                       \  /   \   /                           \ /    \  /                                  \
+%   /                       \  /   \   /                           \ /    \  /                                   \
 %   |[Mp]+ alpha*dt*[Kp],[C]|  |Pn |   |[Mp]+ (1-alpha)*dt*[Kp],[C]| |Pn_1|  |( alpha*{qn}+ (1-alpha)*{qn_1} )*dt|
 %   |                       |* |   | = |                           |*|    |+ |                                   |
-%   |-[C]^T            ,[Ku]|  |Un |   |          0           , 0  | |Un_1|  |          {Tn}                    |     
+%   |-[C]^T            ,[Ku]|  |Un |   |          0           , 0  | |Un_1|  |          {Tn}                     |     
 %   \                       /  \   /   \                           / \    /  \                                   /
 % 
 % which could be written as:
@@ -16,7 +16,6 @@ function [P,U] = adimFullCoupling11(input11)
 % input list:
 % input11.
 %         T           : total time for the study
-%         num_iter    : number of iteration in one time step
 %         num_tstep   : number of time step
 %         num_nodes   : number of nodes 
 %         sigma0      : applied stress at the top 
@@ -49,7 +48,7 @@ vec_X = zeros(2*num_nodes, num_tstep);
 mat1(num_nodes+1,:)           = 0;
 mat1(num_nodes+1,num_nodes+1) = 1;
 
-vec_X(num_nodes+1, 1: num_tstep) = 0;
+vec_X(num_nodes+1, :) = 0;
 
 % drained at the top (X=1), pressure fixed at 0
 mat1(num_nodes,:)              = 0;
@@ -58,17 +57,17 @@ mat1(num_nodes,num_nodes)      = 1;
 mat2(num_nodes,:)              = 0;
 mat2(num_nodes,num_nodes)      = 1;
 
-vec_X(num_nodes, 1: num_tstep) = 0;
+vec_X(num_nodes, :) = 0;
 
 
 %% Loading parameters
 
-q = zeros(num_nodes, num_tstep);
-T = zeros(num_nodes, num_tstep);
+q = zeros(num_nodes, num_tstep );
+T = zeros(num_nodes, num_tstep );
 % no flow at X=0
-q(1,1:num_tstep) = 0;
+q(1,:) = 0;
 % applied stress sigma0 at X=1 for time step 2
-T(num_nodes,2:num_tstep) = sigma0;
+T(num_nodes,2: num_tstep) = sigma0;
 
 cond_mat1            = cond(full(mat1));
 

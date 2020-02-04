@@ -7,8 +7,9 @@ temp    = PoroElasPara();
 input.L = 10;
 T0      = temp.mu*temp.CM*input.L^2/temp.k;
 
-input.T         = 10;
-input.num_tstep = 1000;
+input.T         = 1e5;
+input.num_tstep = 10;
+input.num_nodes = 101;
 
 X       = 0:1/(input.num_nodes-1):1;
 listT   = input.T *(0:1/(input.num_tstep-1):1);
