@@ -61,6 +61,7 @@ for i =1:length(tList)
     P_ad = -L^2*ConsoPara.gamma*ConsoPara.sigma0_dot/ConsoPara.c/2;
     [P2, Z2] = UniformLoading(tau);
     plot(1-Z2, P2*P_ad/1e6,'r');
+    grid on;
     disp(tau)
 end
 ylim([0, ceil(ConsoPara.gamma*10)/10])

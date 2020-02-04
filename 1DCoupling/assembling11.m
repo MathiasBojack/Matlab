@@ -54,7 +54,7 @@ function [K_glob,M_glob,C_glob]  = assembling11(input11)
 %--------------------------------------------------------------------------
 
 coord   = input11.coord;
-connec  = input11.connect;
+connec  = input11.connec;
 mater   = input11.mater;
 
 num_Nodes = length(coord);
@@ -68,9 +68,9 @@ elem_len = abs( connec(:,1)-connec(:,2) );
 
 for e = 1:num_Elem
     [K_loc,M_loc,C_loc] = element11(elem_len(e));
-    K_glob = K_glob(connec(e,:),connec(e,:)) + mater(e,1)* K_loc;
-    M_glob = M_glob(connec(e,:),connec(e,:)) + mater(e,1)* M_loc;
-    C_glob = C_glob(connec(e,:),connec(e,:)) + mater(e,1)* C_loc;
+    K_glob(connec(e,:),connec(e,:)) = K_glob(connec(e,:),connec(e,:)) + mater(e,1)* K_loc;
+    M_glob(connec(e,:),connec(e,:)) = M_glob(connec(e,:),connec(e,:)) + mater(e,1)* M_loc;
+    C_glob(connec(e,:),connec(e,:)) = C_glob(connec(e,:),connec(e,:)) + mater(e,1)* C_loc;
 end
 
 
