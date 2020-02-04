@@ -40,11 +40,14 @@ sigma0  = ConsoPara.sigma0; % sigma0 <0, compression
 
 
 Z = [0:0.01:1]';
-P = zeros(length(Z),1);
-W = -b/Kv * gamma*sigma0;  
-for m = 0:1:100
-    P = P - 4/pi / (2*m+1) * exp(-(2*m+1)^2*pi^2*tau/4) * sin((2*m+1)*pi/2*Z);
-    % cm = b/Kv;
-    W = W + b/Kv*gamma*sigma0 * 8/pi^2 / (2*m+1)^2 * exp(-(2*m+1)^2*pi^2*tau/4);
+P = zeros(length(Z),length(tau));
+W = -b/Kv * gamma*sigma0 * ones(length(Z),length(tau));
+
+for i = 1:length(tau)
+    for m = 0:1:100
+        P(:,i) = P(:,i) - 4/pi / (2*m+1) * exp(-(2*m+1)^2*pi^2*tau(i)/4) * sin((2*m+1)*pi/2*(1-Z));
+        W(:,i) = W(:,i) + b/Kv*gamma*sigma0 * 8/pi^2 / (2*m+1)^2 * exp(-(2*m+1)^2*pi^2*tau(i)/4);
+    end
 end
 
+end

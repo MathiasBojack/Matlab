@@ -1,10 +1,12 @@
 function [K_glob,M_glob,C_glob]  = assembling11(input11)
 %--------------------------------------------------------------------------
 % function for assembling the global stiffness matrix for the 1D element
-
-% input list:
-% structure variable input11 with the following attributs:
+%==========================================================================
 % 
+%               1.Input list:
+% structure variable input11 with the following attributs:
+%==========================================================================
+%
 % coord: coordiate matrix
 %
 %   [x1 of glo_node_1; x1 of glo_node_2;...; x1 of glo_node_n]
@@ -30,47 +32,27 @@ function [K_glob,M_glob,C_glob]  = assembling11(input11)
 %    coeff_K, coeff_M; coeff_C]   -> element N_E
 % 
 %--------------------------------------------------------------------------
-% for coupled hydraulic  problem:
-%   
-%   CM*dp/dt + b*dev/dt = k/mu * d2p/dx2
-%
-%   coeff_K = k/mu, coeff_M = CM, coeff_C = b;
-%
-% The discretized problem could be written as:
-%
-%  [M_glob]*{P_dot} +[C_glob]*{U_dot} + [K_glob_p]*{P} + {q^d} = 0
-%
-%--------------------------------------------------------------------------
-% for coupled poromechanical problem:
-%   
-%   d( (lamda+2G)du/dx -b*p  )/dx =0
-%   
-%   coeff_K = lamda+2G, coeff_M = 0, coeff_C = b;
-%
-% The discretized problem could be written as:
-%
-%  -[C_glob]^T*{P} + [K_glob]*{U} + {T^d} = 0
-%
-%--------------------------------------------------------------------------
+
+
 
 coord   = input11.coord;
 connec  = input11.connec;
 mater   = input11.mater;
 
-num_Nodes = length(coord);
-num_Elem  = length(connec);
+num_Nodes      = length(coord);
+[num_Elem, ~]  = size(connec);
 
 K_glob = sparse(num_Nodes,num_Nodes);
 M_glob = sparse(num_Nodes,num_Nodes);
 C_glob = sparse(num_Nodes,num_Nodes);
 
-elem_len = abs( connec(:,1)-connec(:,2) );
+elem_len = abs( coord(connec(:,1))- coord(connec(:,2)) );
 
-for e = 1:num_Elem
+for e = 1: num_Elem
     [K_loc,M_loc,C_loc] = element11(elem_len(e));
     K_glob(connec(e,:),connec(e,:)) = K_glob(connec(e,:),connec(e,:)) + mater(e,1)* K_loc;
-    M_glob(connec(e,:),connec(e,:)) = M_glob(connec(e,:),connec(e,:)) + mater(e,1)* M_loc;
-    C_glob(connec(e,:),connec(e,:)) = C_glob(connec(e,:),connec(e,:)) + mater(e,1)* C_loc;
+    M_glob(connec(e,:),connec(e,:)) = M_glob(connec(e,:),connec(e,:)) + mater(e,2)* M_loc;
+    C_glob(connec(e,:),connec(e,:)) = C_glob(connec(e,:),connec(e,:)) + mater(e,3)* C_loc;
 end
 
 

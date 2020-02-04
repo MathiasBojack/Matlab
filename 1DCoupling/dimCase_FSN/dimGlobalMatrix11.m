@@ -1,4 +1,4 @@
-function output = globalMatrix11(PoroProperty,input11)
+function output = dimGlobalMatrix11(PoroProperty,input11)
 %%             Comments 
 % This function calculates the global matrix for solving the 1D HM
 % problem in the following matrix form:
@@ -6,8 +6,37 @@ function output = globalMatrix11(PoroProperty,input11)
 %   /                       \  /   \   /                           \ /    \  /                                  \
 %   |[Mp]+ alpha*dt*[Kp],[C]|  |Pn |   |[Mp]+ (1-alpha)*dt*[Kp],[C]| |Pn_1|  |( alpha*{qn}+ (1-alpha)*{qn_1} )*dt|
 %   |                       |* |   | = |                           |*|    |+ |                                   |
-%   |-[C]^T            ,[Ku]|  |Un |   |          0           , 0  | |Un_1|  |          -{Tn}                    |     
+%   |-[C]^T            ,[Ku]|  |Un |   |          0           , 0  | |Un_1|  |           {Tn}                    |     
 %   \                       /  \   /   \                           / \    /  \                                   /    
+
+
+%==========================================================================
+% 
+%               Dimensional cases
+% 
+%==========================================================================
+% for coupled hydraulic  problem:
+%   
+%   CM*dp/dt + b*dev/dt = k/mu * d2p/dx2
+%
+%   coeff_K = k/mu, coeff_M = CM, coeff_C = b;
+%
+% The discretized problem could be written as:
+%
+%  [Mp]*{P_dot} +[Cp]*{U_dot} + [Kp]*{P} + {q^d} = 0
+%
+%--------------------------------------------------------------------------
+% for coupled poromechanical problem:
+%   
+%   d( (lamda+2G)du/dx -b*p  )/dx =0
+%   
+%   coeff_K = lamda+2G, coeff_M = 0, coeff_C = b;
+%
+% The discretized problem could be written as:
+%
+%  -[Cp]^T*{P} + [Ku]*{U} + {T^d} = 0
+%
+%--------------------------------------------------------------------------
 
 %% Input Parameters
 
