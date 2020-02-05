@@ -23,7 +23,7 @@ ConsoPara.Kv    = PoroProperty.Kv;
 ConsoPara.sigma0 = -1e6;
 L = 10;
 
-tList = [ 1e-2  1e0 1e1];
+tList = [ 1e-2  1e0 1e4];
 
 figure(1);
 clf
@@ -45,7 +45,7 @@ for i =1:length(tList)
     ConsoPara.tau = tau;
     [P1,W,Z1] = Consolidation(ConsoPara);
 
-    plot(1-Z1,P1*ConsoPara.gamma*ConsoPara.sigma0/1e6,'k')
+    plot(Z1,P1*ConsoPara.gamma*ConsoPara.sigma0/1e6,'k')
 
     %%-------------------------------------------------------------------------
     %

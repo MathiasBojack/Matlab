@@ -27,7 +27,7 @@
 %                        OUTPUT: Pressure and subssidence
 %
 %   P(z,tau)= p(z,tau)/gamma/sigma0:	dimensionless pressure  [1]
-%   U(L,tau)= u(L,tau)/L:               Subsidence              [1]
+%   W(L,tau)= W(L,tau)/L:               Subsidence              [1]
 %
 %%-------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ tau     = ConsoPara.tau;
 b       = ConsoPara.b;
 Kv      = ConsoPara.Kv;
 gamma   = ConsoPara.gamma;
-sigma0  = ConsoPara.sigma0; % sigma0 <0, compression
+sigma0  = ConsoPara.sigma0; % sigma0 <0, compression, dimensional parameter
 
 
 Z = [0:0.01:1]';
@@ -50,5 +50,5 @@ for i = 1:length(tau)
     end
 end
 
-W = b/Kv * gamma*sigma0 *W;
+W = b/Kv * gamma*sigma0 *W + sigma0/ConsoPara.Kvu;
 end

@@ -34,7 +34,7 @@ phi = 0.1;
 %               1cP = 1e-3 Pa.s; 1P = 0.1Pa.s
 %%-------------------------------------------------------------------------
 
-k   = 1e-13;  
+k   = 1e-11;  
 mu  = 5e-4; % water
 % mu  = 5e-5; % CO2  
 
@@ -57,6 +57,9 @@ Ku  =    (M*b^2+K);
 G   =    (E/2/(1+nu)); 
 Kv  =    (K + 4/3*G);
 
+B    = b*M/Ku;
+vu   = (3*nu+b*B*(1-2*nu))/(3-b*B*(1-2*nu)); % undrained poisson ratio
+Kvu  = Ku*3*(1-vu)/(1+vu);
 %--------------------------------------------------------------------------
 %                        OUTPUT: Hydraulic parameters
 %   Cf = 1/Kf:      Compressibility of the fluid            [Pa^-1]
@@ -83,6 +86,9 @@ PoroProperty.G      = G;
 PoroProperty.Kv     = Kv;
 PoroProperty.k      = k;
 PoroProperty.mu     = mu;
+PoroProperty.B      = B;
+PoroProperty.vu     = vu;
+PoroProperty.Kvu   = Kvu;
 
 end
 

@@ -2,12 +2,12 @@ clear; clc
 %% Input parameters:
 
 input.alpha     = 0.6;
-
-temp    = PoroElasPara();
 input.L = 10;
-T0      = temp.mu*temp.CM*input.L^2/temp.k;
 
-input.T         = 1e5;
+temp            = PoroElasPara();
+T0              = temp.mu*temp.CM*input.L^2/temp.k;
+t               = 1e6; 
+input.T         = t/T0;  % adimensional time 
 input.num_tstep = 10;
 input.num_nodes = 101;
 
